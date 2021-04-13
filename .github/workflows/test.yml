@@ -16,6 +16,6 @@ jobs:
           setVersion: 
           pomLocations: 
           bumpChangelog: true
-          changelogDesc: '${{ github.event.pull_request.title }}'
+          changelogDesc: ${{ github.event.pull_request.title }}
       - name: Get the output time
-        run: echo "The time is ${{ steps.bump.outputs.versionNumber }}"
+        run: echo "The Version Number is ${{ steps.bump.outputs.versionNumber }}"
