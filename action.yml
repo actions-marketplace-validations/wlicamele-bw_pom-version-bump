@@ -1,15 +1,38 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'POM Version Bump'
+description: 'Find the current version and bump the version number OR explicitly set the version number and then update the changelog accordingly'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
-    required: true
-    default: 'World'
+  bumpVersionType:
+    description: 'Parameter to bump version number or set version number'
+    required: false
+    default: 'bump'
+  bumpVersion:
+    description: 'Version bump type; major, minor, or patch'
+    required: false
+    default: 'patch'
+  setVersion:
+    description: 'Version number to explicitly set'
+    required: false
+  pomLocations:
+    description: 'Location of pom file(s)'
+    required: false
+    default: 'pom.xml'
+  bumpChangelog:
+    description: 'Add changelog entry; true or false'
+    required: false
+    default: 'false'  
+  changelogDesc:
+    description: 'Changelog message, PR title should be used by Dependabot'
+    required: false
 outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  versionNumber: # id of output
+    description: 'Updated Version Number'
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.who-to-greet }}
+    - ${{ inputs.bumpVersionType }}
+    - ${{ inputs.bumpVersion }}
+    - ${{ inputs.setVersion }}
+    - ${{ inputs.pomLocations }}
+    - ${{ inputs.bumpChangelog }}
+    - ${{ inputs.changelogDesc }}
