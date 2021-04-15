@@ -13,9 +13,7 @@ jobs:
         with:
           bumpVersionType: bump
           bumpVersion: patch
-          setVersion: 
-          pomLocations: 
           bumpChangelog: true
           changelogDesc: ${{ github.event.pull_request.title }}
-      - name: Get the output time
+      - name: Get the version number
         run: echo "The Version Number is ${{ steps.bump.outputs.versionNumber }}"
