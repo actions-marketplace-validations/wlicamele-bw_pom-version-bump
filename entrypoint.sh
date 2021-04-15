@@ -26,30 +26,34 @@ IFS="," read -a pomLocationsArray <<< "$pomLocations"
 
 # Find Next_Version number
 if [[ "$bumpVersionType" == "bump" ]]; then
-	CURR_VERSION=$(sed -n "s:.*<artifact-version>\(.*\)</artifact-version>.*:\1:p" pom.xml)
-	echo "Current Version: ${CURR_VERSION}"
+	if test -f pom.xml; then
+        CURR_VERSION=$(sed -n "s:.*<artifact-version>\(.*\)</artifact-version>.*:\1:p" pom.xml)
+        echo "Current Version: ${CURR_VERSION}"
 
-	MAJOR=$(echo ${CURR_VERSION} | cut -d '.' -f 1)
-	MINOR=$(echo ${CURR_VERSION} | cut -d '.' -f 2)
-	PATCH=$(echo ${CURR_VERSION} | cut -d '.' -f 3 | cut -d '-' -f 1) 
+        MAJOR=$(echo ${CURR_VERSION} | cut -d '.' -f 1)
+        MINOR=$(echo ${CURR_VERSION} | cut -d '.' -f 2)
+        PATCH=$(echo ${CURR_VERSION} | cut -d '.' -f 3 | cut -d '-' -f 1) 
 
-	case "$bumpVersion" in
-		patch)
-			((PATCH++))
-		;;
-		minor)
-			((MINOR++))
-			PATCH=0
-		;;	
-		major)
-			((MAJOR++))
-			MINOR=0
-			PATCH=0
-		;;	
-	esac
-
-	NEXT_VERSION="${MAJOR}.${MINOR}.${PATCH}"
-	
+        case "$bumpVersion" in
+            patch)
+                ((PATCH++))
+            ;;
+            minor)
+                ((MINOR++))
+                PATCH=0
+            ;;	
+            major)
+                ((MAJOR++))
+                MINOR=0
+                PATCH=0
+            ;;	
+        esac
+    NEXT_VERSION="${MAJOR}.${MINOR}.${PATCH}"
+    else 
+        echo "pom.xml does not exist"
+        exit
+    fi
+		
 elif [[ "$bumpVersionType" == "set" ]]; then
 	if [[ -z "$setVersion" ]]; then
 		echo "Cannot set version, no version specified"
@@ -66,7 +70,7 @@ echo "Next Version: ${NEXT_VERSION}"
 for (( i=0; i<${#pomLocationsArray[@]}; i++ )); do
     	# Update _pom.xml_ with the new Version Number
 	# i.bak is used as in-place flag that works both on Mac (BSD) and Linux
-	if test -f ${pomLocationsArray[$i]}
+	if test -f ${pomLocationsArray[$i]}; then
         sed -i.bak "s:<artifact-version>.*</artifact-version>:<artifact-version>${NEXT_VERSION}-SNAPSHOT</artifact-version>:" "${pomLocationsArray[$i]}"
 	    rm "${pomLocationsArray[$i]}.bak"
 	    echo "Updated Version number in ${pomLocationsArray[$i]} to ${NEXT_VERSION}"
@@ -77,7 +81,7 @@ done
 
 # i.bak is used as in-place flag that works both on Mac (BSD) and Linux
 if [[ "$bumpChangelog" == "true" ]]; then
-	if test -f CHANGELOG.md
+	if test -f CHANGELOG.md; then
         sed -i.bak "3i* v${NEXT_VERSION}\n    * ${changelogDesc}" CHANGELOG.md
 	    rm CHANGELOG.md.bak
 	    echo "Changelog updated with ${NEXT_VERSION}: ${changelogDesc} "
