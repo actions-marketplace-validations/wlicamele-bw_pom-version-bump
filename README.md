@@ -8,44 +8,44 @@ This action is used to either find the current version and bump the version numb
 
 ### `bumpVersionType`
 
-**Description:** Parameter to bump version number or set version number  
-**Options:** `set` or `bump`  
-**Default:** `bump`  
-**Required** : false  
+> **Description:** Parameter to bump version number or set version number  
+> **Options:** `set` or `bump`  
+> **Default:** `bump`  
+> **Required** : false  
  
 
 ### `bumpVersion`
 
-**Description:** Type of version bump  
-**Options:** `major`, `minor`, `patch`  
-**Default:** `patch`  
-**Required** : false  
+> **Description:** Type of version bump  
+> **Options:** `major`, `minor`, `patch`  
+> **Default:** `patch`  
+> **Required** : false  
 
 ### `setVersion`
 
-**Description:** Version number to explicitly set  
-**Options:** `major.minor.patch`  
-**Required** : false
+> **Description:** Version number to explicitly set  
+> **Options:** `major.minor.patch`  
+> **Required** : false  
 
 ### `pomLocations`
 
-**Description:** Location(s) of pom file(s). Comma seperated list
-**Options:** string
-**Default:** `pom.xml`
-**Required** : false
+> **Description:** Location(s) of pom file(s). Comma seperated list  
+> **Options:** string  
+> **Default:** `pom.xml`  
+> **Required** : false  
 
 ### `bumpChangelog`
 
-**Description:** Add changelog entry?
-**Options:** `true` or `false`
-**Default:** `false`
-**Required** : false
+> **Description:** Add changelog entry?  
+> **Options:** `true` or `false`  
+> **Default:** `false`  
+> **Required** : false  
 
 ### `bumpChangelog`
 
-**Description:** Changelog message, PR title should be used for Dependabot PRs
-**Options:** string
-**Required** : false
+> **Description:** Changelog message, PR title should be used for Dependabot PRs  
+> **Options:** string  
+> **Required** : false  
 
 ## Outputs
 
