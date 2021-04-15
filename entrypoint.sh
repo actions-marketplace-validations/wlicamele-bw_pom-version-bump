@@ -66,16 +66,24 @@ echo "Next Version: ${NEXT_VERSION}"
 for (( i=0; i<${#pomLocationsArray[@]}; i++ )); do
     	# Update _pom.xml_ with the new Version Number
 	# i.bak is used as in-place flag that works both on Mac (BSD) and Linux
-	sed -i.bak "s:<artifact-version>.*</artifact-version>:<artifact-version>${NEXT_VERSION}-SNAPSHOT</artifact-version>:" "${pomLocationsArray[$i]}"
-	rm "${pomLocationsArray[$i]}.bak"
-	echo "Updated Version number in ${pomLocationsArray[$i]} to ${NEXT_VERSION}"
+	if test -f ${pomLocationsArray[$i]}
+        sed -i.bak "s:<artifact-version>.*</artifact-version>:<artifact-version>${NEXT_VERSION}-SNAPSHOT</artifact-version>:" "${pomLocationsArray[$i]}"
+	    rm "${pomLocationsArray[$i]}.bak"
+	    echo "Updated Version number in ${pomLocationsArray[$i]} to ${NEXT_VERSION}"
+    else
+        echo "${pomLocationsArray[$i]} does not exist"
+    fi    
 done
 
 # i.bak is used as in-place flag that works both on Mac (BSD) and Linux
 if [[ "$bumpChangelog" == "true" ]]; then
-	sed -i.bak "3i* v${NEXT_VERSION}\n    * ${changelogDesc}" CHANGELOG.md
-	rm CHANGELOG.md.bak
-	echo "Changelog updated with ${NEXT_VERSION}: ${changelogDesc} "
+	if test -f CHANGELOG.md
+        sed -i.bak "3i* v${NEXT_VERSION}\n    * ${changelogDesc}" CHANGELOG.md
+	    rm CHANGELOG.md.bak
+	    echo "Changelog updated with ${NEXT_VERSION}: ${changelogDesc} "
+    else
+        echo "Changelog.md does not exist"
+    fi
 fi
 
 # Commit changes
