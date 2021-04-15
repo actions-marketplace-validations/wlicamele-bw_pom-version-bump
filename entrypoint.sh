@@ -1,4 +1,5 @@
-#!/bin/sh -l
+#!/bin/bash
+
 bumpVersionType=$1
 bumpVersion=$2
 setVersion=$3
@@ -70,7 +71,6 @@ for (( i=0; i<${#pomLocationsArray[@]}; i++ )); do
 	echo "Updated Version number in ${pomLocationsArray[$i]} to ${NEXT_VERSION}"
 done
 
-# Update _CHANGELOG.md_ with the new version and the passed in PR title as the description
 # i.bak is used as in-place flag that works both on Mac (BSD) and Linux
 if [[ "$bumpChangelog" == "true" ]]; then
 	sed -i.bak "3i* v${NEXT_VERSION}\n    * ${changelogDesc}" CHANGELOG.md
