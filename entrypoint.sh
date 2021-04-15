@@ -6,9 +6,82 @@ pomLocations=$4
 bumpChangelog=$5
 changelogDesc=$6
 
-echo "Bump version type: $bumpVersionType"
-echo "Bump version: $bumpVersion"
-echo "Set version: $setVersion"
+echo "Bump Version Type: $bumpVersionType"
+echo "Bump Version: $bumpVersion"
+echo "Set Version: $setVersion"
 echo "POM Location(s): $pomLocations"
-echo "Bump changelog $bumpChangelog"
+echo "Bump changelog: $bumpChangelog"
 echo "Changelog Desc: $changelongDesc"
+
+while [ $# -gt 0 ]; do
+   if [[ $1 == *"--"* ]]; then
+        param="${1/--/}"
+        declare $param="$2"
+   fi
+  shift
+done
+
+IFS="," read -a pomLocationsArray <<< "$pomLocations"
+
+# Find Next_Version number
+if [[ "$bumpVersionType" == "bump" ]]; then
+	CURR_VERSION=$(sed -n "s:.*<artifact-version>\(.*\)</artifact-version>.*:\1:p" pom.xml)
+	echo "Current Version: ${CURR_VERSION}"
+
+	MAJOR=$(echo ${CURR_VERSION} | cut -d '.' -f 1)
+	MINOR=$(echo ${CURR_VERSION} | cut -d '.' -f 2)
+	PATCH=$(echo ${CURR_VERSION} | cut -d '.' -f 3 | cut -d '-' -f 1) 
+
+	case "$bumpVersion" in
+		patch)
+			((PATCH++))
+		;;
+		minor)
+			((MINOR++))
+			PATCH=0
+		;;	
+		major)
+			((MAJOR++))
+			MINOR=0
+			PATCH=0
+		;;	
+	esac
+
+	NEXT_VERSION="${MAJOR}.${MINOR}.${PATCH}"
+	
+elif [[ "$bumpVersionType" == "set" ]]; then
+	if [[ -z "$setVersion" ]]; then
+		echo "Cannot set version, no version specified"
+		exit
+	else
+		NEXT_VERSION="$setVersion"
+	fi
+else
+	echo "${bumpVersionType} is not a valid bumpVersionType"
+	exit
+fi
+echo "Next Version: ${NEXT_VERSION}"
+
+for (( i=0; i<${#pomLocationsArray[@]}; i++ )); do
+    	# Update _pom.xml_ with the new Version Number
+	# i.bak is used as in-place flag that works both on Mac (BSD) and Linux
+	sed -i.bak "s:<artifact-version>.*</artifact-version>:<artifact-version>${NEXT_VERSION}-SNAPSHOT</artifact-version>:" "${pomLocationsArray[$i]}"
+	rm "${pomLocationsArray[$i]}.bak"
+	echo "Updated Version number in ${pomLocationsArray[$i]} to ${NEXT_VERSION}"
+done
+
+# Update _CHANGELOG.md_ with the new version and the passed in PR title as the description
+# i.bak is used as in-place flag that works both on Mac (BSD) and Linux
+if [[ "$bumpChangelog" == "true" ]]; then
+	sed -i.bak "3i* v${NEXT_VERSION}\n    * ${changelogDesc}" CHANGELOG.md
+	rm CHANGELOG.md.bak
+	echo "Changelog updated with ${NEXT_VERSION}: ${changelogDesc} "
+fi
+
+# Commit changes
+git checkout ${GITHUB_HEAD_REF}
+git config user.name github-actions
+git config user.email github-actions@github.com
+git add .
+git commit -m "GitHub Action - pom.xml and CHANGELOG.md Automations"
+git push
