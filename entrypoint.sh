@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 bumpVersionType=$1
 bumpVersion=$2
