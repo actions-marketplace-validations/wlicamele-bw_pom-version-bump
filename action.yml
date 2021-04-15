@@ -6,7 +6,7 @@ inputs:
     required: false
     default: 'bump'
   bumpVersion:
-    description: 'Version bump type; major, minor, or patch'
+    descriptio n: 'Version bump type; major, minor, or patch'
     required: false
     default: 'patch'
   setVersion:

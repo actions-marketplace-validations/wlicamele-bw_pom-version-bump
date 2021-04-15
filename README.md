@@ -8,23 +8,23 @@ This action is used to either find the current version and bump the version numb
 
 ### `bumpVersionType`
 
-**Description:** Parameter to bump version number or set version number
-**Options:** `set` or `bump`
-**Default:** `bump`
-**Required** : false
+**Description:** Parameter to bump version number or set version number  
+**Options:** `set` or `bump`  
+**Default:** `bump`  
+**Required** : false  
  
 
 ### `bumpVersion`
 
-**Description:** Type of version bump
-**Options:** `major`, `minor`, `patch`
-**Default:** `patch`
-**Required** : false
+**Description:** Type of version bump  
+**Options:** `major`, `minor`, `patch`  
+**Default:** `patch`  
+**Required** : false  
 
 ### `setVersion`
 
-**Description:** Version number to explicitly set
-**Options:** `major.minor.patch`
+**Description:** Version number to explicitly set  
+**Options:** `major.minor.patch`  
 **Required** : false
 
 ### `pomLocations`
