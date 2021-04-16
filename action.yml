@@ -1,4 +1,4 @@
-name: 'POM Version Bump'
+name: 'POM and Changelog Version Bump'
 description: 'Find the current version and bump the version number OR explicitly set the version number and then update the changelog accordingly'
 inputs:
   bumpVersionType:
