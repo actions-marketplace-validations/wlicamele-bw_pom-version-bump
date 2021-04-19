@@ -41,11 +41,18 @@ This action is used to either find the current version and bump the version numb
 > **Default:** `false`  
 > **Required** : false  
 
-### `bumpChangelog`
+### `changelogDesc`
 
 > **Description:** Changelog message, PR title should be used for Dependabot PRs  
 > **Options:** string  
 > **Required** : false  
+
+### `pomVersionTag`
+
+> **Description:** The POM Version tag name  
+> **Options:** string  
+> **Default:** `artifact-version`  
+> **Required** : false 
 
 ## Outputs
 
@@ -55,17 +62,20 @@ This action is used to either find the current version and bump the version numb
 
 ## Example usage
 ```yaml
-on: [push]
+on:
+  pull_request:
+    types: [opened]
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    if: github.event.pull_request.user.login == 'dependabot-preview[bot]' || github.event.pull_request.user.login == 'dependabot[bot]'
     name: A job to bump POM and ChangeLog
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Uses POM Version Bump
-        uses: ./  #Uses an action in the root directory
+        uses: wlicamele-bw/pom-version-bump@v1.0
         id: bump
         with:
           bumpVersionType: bump
@@ -75,3 +85,4 @@ jobs:
       - name: Get the version number
         run: echo "The Version Number is ${{ steps.bump.outputs.versionNumber }}"
 ```
+
