@@ -26,6 +26,10 @@ inputs:
   changelogDesc:
     description: 'Changelog message, PR title should be used by Dependabot'
     required: false
+  pomVersionTag:
+    description: 'Version Tag used in POM file to define the version number'
+    required: false
+    default: 'artifact-version'
 outputs:
   versionNumber: # id of output
     description: 'Updated Version Number'
@@ -39,3 +43,4 @@ runs:
     - ${{ inputs.pomLocations }}
     - ${{ inputs.bumpChangelog }}
     - ${{ inputs.changelogDesc }}
+    - ${{ inputs.pomVersionTag }}

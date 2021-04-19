@@ -6,6 +6,7 @@ setVersion=$3
 pomLocations=$4
 bumpChangelog=$5
 changelogDesc=$6
+pomVersionTag=$7
 
 echo "Bump Version Type: $bumpVersionType"
 echo "Bump Version: $bumpVersion"
@@ -13,6 +14,7 @@ echo "Set Version: $setVersion"
 echo "POM Location(s): $pomLocations"
 echo "Bump changelog: $bumpChangelog"
 echo "Changelog Desc: $changelogDesc"
+echo "POM Version Tag: $pomVersionTag"
 
 while [ $# -gt 0 ]; do
    if [[ $1 == *"--"* ]]; then
@@ -27,7 +29,7 @@ IFS="," read -a pomLocationsArray <<< "$pomLocations"
 # Find Next_Version number
 if [[ "$bumpVersionType" == "bump" ]]; then
 	if test -f "pom.xml"; then
-        CURR_VERSION=$(sed -n "s:.*<artifact-version>\(.*\)</artifact-version>.*:\1:p" pom.xml)
+        CURR_VERSION=$(sed -n "s:.*<$pomVersionTag>\(.*\)</$pomVersionTag>.*:\1:p" pom.xml)
         echo "Current Version: ${CURR_VERSION}"
 
         MAJOR=$(echo ${CURR_VERSION} | cut -d '.' -f 1)
