@@ -12,7 +12,7 @@ echo "Bump Version: $bumpVersion"
 echo "Set Version: $setVersion"
 echo "POM Location(s): $pomLocations"
 echo "Bump changelog: $bumpChangelog"
-echo "Changelog Desc: $changelongDesc"
+echo "Changelog Desc: $changelogDesc"
 
 while [ $# -gt 0 ]; do
    if [[ $1 == *"--"* ]]; then
@@ -91,6 +91,7 @@ if [[ "$bumpChangelog" == "true" ]]; then
 fi
 
 # Commit changes
+git fetch
 git checkout ${GITHUB_HEAD_REF}
 git config user.name github-actions
 git config user.email github-actions@github.com
