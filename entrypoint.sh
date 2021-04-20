@@ -78,6 +78,7 @@ for (( i=0; i<${#pomLocationsArray[@]}; i++ )); do
 	    echo "Updated Version number in ${pomLocationsArray[$i]} to ${NEXT_VERSION}"
     else
         echo "${pomLocationsArray[$i]} does not exist"
+        exit
     fi    
 done
 
@@ -89,14 +90,20 @@ if [[ "$bumpChangelog" == "true" ]]; then
 	    echo "Changelog updated with ${NEXT_VERSION}: ${changelogDesc} "
     else
         echo "Changelog.md does not exist"
+        exit
     fi
 fi
 
 # Commit changes
-#git fetch
-#git checkout ${GITHUB_HEAD_REF}
+git fetch
+git checkout ${GITHUB_HEAD_REF}
 git config user.name github-actions
 git config user.email github-actions@github.com
-git add pom.xml CHANGELOG.md
+for (( i=0; i<${#pomLocationsArray[@]}; i++ )); do
+	if test -f "${pomLocationsArray[$i]}"; then
+        git add "${pomLocationsArray[$i]}"
+    fi    
+done
+git add CHANGELOG.md
 git commit -m "GitHub Action - pom.xml and CHANGELOG.md Automations"
 git push
