@@ -26,9 +26,6 @@ done
 
 IFS="," read -a pomLocationsArray <<< "$pomLocations"
 
-# Stash any local changes
-git stash
-
 # Find Next_Version number
 if [[ "$bumpVersionType" == "bump" ]]; then
 	if test -f "pom.xml"; then
@@ -100,6 +97,6 @@ git fetch
 git checkout ${GITHUB_HEAD_REF}
 git config user.name github-actions
 git config user.email github-actions@github.com
-git add .
+git add pom.xml CHANGELOG.md
 git commit -m "GitHub Action - pom.xml and CHANGELOG.md Automations"
-git push
+git push --force
