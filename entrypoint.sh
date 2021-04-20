@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # git stash
-git stash
+git fetch
+git checkout ${GITHUB_HEAD_REF}
 
 bumpVersionType=$1
 bumpVersion=$2
