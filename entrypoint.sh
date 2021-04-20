@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# git stash
+git stash
+
 bumpVersionType=$1
 bumpVersion=$2
 setVersion=$3
