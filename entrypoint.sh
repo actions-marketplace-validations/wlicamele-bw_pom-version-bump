@@ -26,6 +26,9 @@ done
 
 IFS="," read -a pomLocationsArray <<< "$pomLocations"
 
+# Stash any local changes
+git stash
+
 # Find Next_Version number
 if [[ "$bumpVersionType" == "bump" ]]; then
 	if test -f "pom.xml"; then
