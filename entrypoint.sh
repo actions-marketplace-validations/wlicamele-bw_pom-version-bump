@@ -93,10 +93,10 @@ if [[ "$bumpChangelog" == "true" ]]; then
 fi
 
 # Commit changes
-git fetch
-git checkout ${GITHUB_HEAD_REF}
+#git fetch
+#git checkout ${GITHUB_HEAD_REF}
 git config user.name github-actions
 git config user.email github-actions@github.com
 git add pom.xml CHANGELOG.md
 git commit -m "GitHub Action - pom.xml and CHANGELOG.md Automations"
-git push --force
+git push
