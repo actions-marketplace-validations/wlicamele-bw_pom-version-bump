@@ -106,4 +106,4 @@ for (( i=0; i<${#pomLocationsArray[@]}; i++ )); do
 done
 git add CHANGELOG.md
 git commit -m "GitHub Action - pom.xml and CHANGELOG.md Automations"
-git push
+git push origin HEAD:"${GITHUB_HEAD_REF}"
