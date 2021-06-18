@@ -27,7 +27,7 @@ done
 IFS="," read -a pomLocationsArray <<< "$pomLocations"
 
 git fetch
-git show origin/master:pom.xml > pom.xml.BAK
+git show origin/main:pom.xml > pom.xml.BAK
 
 # Find Next_Version number
 if [[ "$bumpVersionType" == "bump" ]]; then
@@ -85,7 +85,7 @@ for (( i=0; i<${#pomLocationsArray[@]}; i++ )); do
     fi    
 done
 
-git checkout -m origin/master CHANGELOG.md
+git checkout -m origin/main CHANGELOG.md
 # i.bak is used as in-place flag that works both on Mac (BSD) and Linux
 if [[ "$bumpChangelog" == "true" ]]; then
 	if test -f "CHANGELOG.md"; then
