@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# git stash
-git fetch
-git checkout ${GITHUB_HEAD_REF}
-
 bumpVersionType=$1
 bumpVersion=$2
 setVersion=$3
@@ -30,10 +26,13 @@ done
 
 IFS="," read -a pomLocationsArray <<< "$pomLocations"
 
+git fetch
+git show origin/master:pom.xml > pom.xml.BAK
+
 # Find Next_Version number
 if [[ "$bumpVersionType" == "bump" ]]; then
 	if test -f "pom.xml"; then
-        CURR_VERSION=$(sed -n "s:.*<$pomVersionTag>\(.*\)</$pomVersionTag>.*:\1:p" pom.xml)
+        CURR_VERSION=$(sed -n "s:.*<$pomVersionTag>\(.*\)</$pomVersionTag>.*:\1:p" pom.xml.BAK)
         echo "Current Version: ${CURR_VERSION}"
 
         MAJOR=$(echo ${CURR_VERSION} | cut -d '.' -f 1)
@@ -86,6 +85,7 @@ for (( i=0; i<${#pomLocationsArray[@]}; i++ )); do
     fi    
 done
 
+git checkout -m origin/master CHANGELOG.md
 # i.bak is used as in-place flag that works both on Mac (BSD) and Linux
 if [[ "$bumpChangelog" == "true" ]]; then
 	if test -f "CHANGELOG.md"; then
