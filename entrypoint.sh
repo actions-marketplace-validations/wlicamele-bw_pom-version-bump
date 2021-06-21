@@ -26,6 +26,7 @@ done
 
 IFS="," read -a pomLocationsArray <<< "$pomLocations"
 
+git clean -f
 git fetch
 git show origin/main:pom.xml > pom.xml.BAK
 
@@ -111,4 +112,3 @@ done
 git add CHANGELOG.md
 git commit -m "GitHub Action - pom.xml and CHANGELOG.md Automations"
 git push origin HEAD:"${GITHUB_HEAD_REF}"
-git clean -f
