@@ -101,7 +101,7 @@ fi
 
 # Commit changes
 #git fetch
-#git checkout ${GITHUB_HEAD_REF}
+git checkout ${GITHUB_HEAD_REF}
 git pull ${GITHUB_HEAD_REF}
 git config user.name github-actions
 git config user.email github-actions@github.com
