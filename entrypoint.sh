@@ -27,7 +27,7 @@ done
 IFS="," read -a pomLocationsArray <<< "$pomLocations"
 
 git clean -f
-#git fetch
+git fetch
 git show origin/main:pom.xml > pom.xml.BAK
 
 # Find Next_Version number
@@ -101,7 +101,7 @@ fi
 
 # Commit changes
 git fetch
-git checkout ${GITHUB_HEAD_REF}
+#git checkout ${GITHUB_HEAD_REF}
 git config user.name github-actions
 git config user.email github-actions@github.com
 for (( i=0; i<${#pomLocationsArray[@]}; i++ )); do
