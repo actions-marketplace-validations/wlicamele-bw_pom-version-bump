@@ -26,7 +26,6 @@ done
 
 IFS="," read -a pomLocationsArray <<< "$pomLocations"
 
-git clean -f
 git show origin/main:pom.xml > pom.xml.BAK
 
 # Find Next_Version number
