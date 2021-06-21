@@ -26,7 +26,7 @@ done
 
 IFS="," read -a pomLocationsArray <<< "$pomLocations"
 
-git fetch
+git clean -f
 git show origin/main:pom.xml > pom.xml.BAK
 
 # Find Next_Version number
@@ -112,3 +112,4 @@ done
 git add CHANGELOG.md
 git commit -m "GitHub Action - pom.xml and CHANGELOG.md Automations"
 git push origin HEAD:"${GITHUB_HEAD_REF}"
+git clean -f
