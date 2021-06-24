@@ -100,7 +100,7 @@ if [[ "$bumpChangelog" == "true" ]]; then
 fi
 
 # Commit changes
-git pull
+git checkout "${GITHUB_HEAD_REF}"
 git config user.name github-actions
 git config user.email github-actions@github.com
 for (( i=0; i<${#pomLocationsArray[@]}; i++ )); do
