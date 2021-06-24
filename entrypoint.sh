@@ -103,6 +103,8 @@ fi
 
 # Commit changes
 echo "git status: `git status`"
+echo "git checkout: `git checkout "${GITHUB_HEAD_REF}"`"
+
 git config user.name github-actions
 git config user.email github-actions@github.com
 echo "set git username and email"
@@ -112,6 +114,6 @@ for (( i=0; i<${#pomLocationsArray[@]}; i++ )); do
     fi    
 done
 git add CHANGELOG.md
-git checkout "${GITHUB_HEAD_REF}"
+
 git commit -m "GitHub Action - pom.xml and CHANGELOG.md Automations"
 git push origin HEAD:"${GITHUB_HEAD_REF}"
