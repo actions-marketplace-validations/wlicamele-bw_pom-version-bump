@@ -101,7 +101,6 @@ fi
 
 # Commit changes
 echo `git status`
-git checkout "${GITHUB_HEAD_REF}"
 git config user.name github-actions
 git config user.email github-actions@github.com
 for (( i=0; i<${#pomLocationsArray[@]}; i++ )); do
@@ -110,5 +109,6 @@ for (( i=0; i<${#pomLocationsArray[@]}; i++ )); do
     fi    
 done
 git add CHANGELOG.md
+git checkout "${GITHUB_HEAD_REF}"
 git commit -m "GitHub Action - pom.xml and CHANGELOG.md Automations"
 git push origin HEAD:"${GITHUB_HEAD_REF}"
