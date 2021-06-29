@@ -118,8 +118,10 @@ done
 git add CHANGELOG.md
 git commit -m "GitHub Action - pom.xml and CHANGELOG.md Automations"
 echo "git fetch"
-git fetch
+git fetch origin "${GITHUB_HEAD_REF}":tmp
 echo "git rebase"
-git rebase "${GITHUB_HEAD_REF}"
+git rebase tmp
 echo "git push"
 git push origin HEAD:"${GITHUB_HEAD_REF}"
+echo "git remove temp"
+git branch -D tmp
