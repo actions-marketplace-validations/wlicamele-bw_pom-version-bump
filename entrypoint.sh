@@ -28,17 +28,14 @@ done
 
 IFS="," read -a pomLocationsArray <<< "$pomLocations"
 
-echo git clean
 git clean -f
-echo git fetch
 git fetch
-echo git pull
-git pull --rebase
-echo git push
-git push
-echo git grab master file
-git show origin/"$mainBranchName":pom.xml > pom.xml.BAK
+#echo git pull
+#git pull --rebase
+#echo git push
+#git push
 
+git show origin/"$mainBranchName":pom.xml > pom.xml.BAK
 
 # Find Next_Version number
 if [[ "$bumpVersionType" == "bump" ]]; then
@@ -120,4 +117,8 @@ for (( i=0; i<${#pomLocationsArray[@]}; i++ )); do
 done
 git add CHANGELOG.md
 git commit -m "GitHub Action - pom.xml and CHANGELOG.md Automations"
+echo "git fetch"
+git fetch
+echo "git rebase"
+git rebase HEAD:"${GITHUB_HEAD_REF}"
 git push origin HEAD:"${GITHUB_HEAD_REF}"
