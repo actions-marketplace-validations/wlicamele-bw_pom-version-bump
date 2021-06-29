@@ -7,6 +7,7 @@ pomLocations=$4
 bumpChangelog=$5
 changelogDesc=$6
 pomVersionTag=$7
+mainBranchName=$8
 
 echo "Bump Version Type: $bumpVersionType"
 echo "Bump Version: $bumpVersion"
@@ -15,6 +16,7 @@ echo "POM Location(s): $pomLocations"
 echo "Bump changelog: $bumpChangelog"
 echo "Changelog Desc: $changelogDesc"
 echo "POM Version Tag: $pomVersionTag"
+echo "Main Branch Name: $mainBranchName"
 
 while [ $# -gt 0 ]; do
    if [[ $1 == *"--"* ]]; then
@@ -30,7 +32,7 @@ git clean -f
 git fetch
 git pull --rebase
 git push
-git show origin/main:pom.xml > pom.xml.BAK
+git show origin/"$mainBranchName":pom.xml > pom.xml.BAK
 
 # Find Next_Version number
 if [[ "$bumpVersionType" == "bump" ]]; then
@@ -88,7 +90,7 @@ for (( i=0; i<${#pomLocationsArray[@]}; i++ )); do
     fi    
 done
 
-git checkout -m origin/main CHANGELOG.md
+git checkout -m origin/"$mainBranchName" CHANGELOG.md
 # i.bak is used as in-place flag that works both on Mac (BSD) and Linux
 if [[ "$bumpChangelog" == "true" ]]; then
 	if test -f "CHANGELOG.md"; then
