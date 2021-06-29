@@ -54,6 +54,14 @@ This action is used to either find the current version and bump the version numb
 > **Default:** `artifact-version`  
 > **Required** : false 
 
+### `mainBranchName`
+
+> **Description:** Main branch; main or master
+> **Options:** string  
+> **Default:** `master`  
+> **Required** : false 
+
+
 ## Outputs
 
 ### `versionNumber`
@@ -74,6 +82,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with: 
+          fetch-depth: 0
       - name: Uses POM Version Bump
         uses: wlicamele-bw/pom-version-bump@v1.0
         id: bump
