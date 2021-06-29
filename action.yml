@@ -30,6 +30,10 @@ inputs:
     description: 'Version Tag used in POM file to define the version number'
     required: false
     default: 'artifact-version'
+  mainBranchName:
+    description: 'Name of the main branch; main or master'
+    required: false
+    default: 'master'
 outputs:
   versionNumber: # id of output
     description: 'Updated Version Number'
@@ -44,3 +48,4 @@ runs:
     - ${{ inputs.bumpChangelog }}
     - ${{ inputs.changelogDesc }}
     - ${{ inputs.pomVersionTag }}
+    - ${{ inputs.mainBranchName }}
