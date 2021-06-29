@@ -117,9 +117,9 @@ for (( i=0; i<${#pomLocationsArray[@]}; i++ )); do
 done
 git add CHANGELOG.md
 git commit -m "GitHub Action - pom.xml and CHANGELOG.md Automations"
-echo "git fetch"
-git fetch origin "${GITHUB_HEAD_REF}"
-echo "git rebase"
-git rebase tmp
+#echo "git fetch"
+#git fetch origin "${GITHUB_HEAD_REF}"
+echo "git pull"
+git pull 
 echo "git push"
-git push origin HEAD:"${GITHUB_HEAD_REF}"
+git push -f origin HEAD:"${GITHUB_HEAD_REF}"
