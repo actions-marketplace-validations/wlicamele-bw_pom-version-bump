@@ -56,7 +56,7 @@ This action is used to either find the current version and bump the version numb
 
 ### `mainBranchName`
 
-> **Description:** Main branch; main or master
+> **Description:** Main branch; main or master  
 > **Options:** string  
 > **Default:** `master`  
 > **Required** : false 
