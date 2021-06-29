@@ -28,11 +28,17 @@ done
 
 IFS="," read -a pomLocationsArray <<< "$pomLocations"
 
+echo git clean
 git clean -f
+echo git fetch
 git fetch
+echo git pull
 git pull --rebase
+echo git push
 git push
+echo git grab master file
 git show origin/"$mainBranchName":pom.xml > pom.xml.BAK
+
 
 # Find Next_Version number
 if [[ "$bumpVersionType" == "bump" ]]; then
