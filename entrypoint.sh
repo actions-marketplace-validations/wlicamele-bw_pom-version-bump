@@ -120,5 +120,6 @@ git commit -m "GitHub Action - pom.xml and CHANGELOG.md Automations"
 echo "git fetch"
 git fetch
 echo "git rebase"
-git rebase HEAD:"${GITHUB_HEAD_REF}"
+git rebase "${GITHUB_HEAD_REF}"
+echo "git push"
 git push origin HEAD:"${GITHUB_HEAD_REF}"
